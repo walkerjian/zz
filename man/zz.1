@@ -1,0 +1,58 @@
+." Manpage for zz
+.TH ZZ 1 "2025-06-19" "0.1" "zz Manual"
+.SH NAME
+zz \- translate natural-language instructions into a single bash command via LLM backends
+.SH SYNOPSIS
+.RI zz " [--backend BACKEND] [--model MODEL] [-h|--help] INSTRUCTION"
+.SH DESCRIPTION
+.B zz
+uses the OpenAI API, local Ollama models, or the Datasette LLM CLI to convert a user-provided
+natural-language instruction into exactly one executable Bash command.
+.SH BACKENDS
+The \fB--backend\fR option (or \fIZZ_BACKEND\fR environment variable) selects the driver:
+.TP
+openai
+Use the OpenAI Chat Completions API via \fBcurl\fR and \fBjq\fR. Requires \fBOPENAI_API_KEY\fR.
+.TP
+ollama
+Use the local \fBollama\fR CLI to run a downloaded model. Requires \fBollama\fR and a pulled model.
+.TP
+llm
+Use the Datasette \fBllm\fR CLI with a configured plugin; logs are optional.
+.SH OPTIONS
+.TP
+\fB--backend BACKEND\fR
+Select one of \fIopenai\fR (default), \fIollama\fR, or \fIllm\fR.
+.TP
+\fB--model MODEL\fR
+Model name or identifier to pass to the backend driver (default: gpt-4o).
+.TP
+\fB-h, --help\fR
+Show brief usage information and exit.
+.SH ENVIRONMENT
+.TP
+\fBOPENAI_API_KEY\fR
+API key used by the \fBopenai\fR backend via the OpenAI API.
+.TP
+\fIZZ_BACKEND\fR
+If set, provides the default for the \fB--backend\fR option.
+.SH EXAMPLES
+.TP
+Convert a simple instruction with the default OpenAI backend:
+.B
+  zz "list all python files in the current directory"
+.TP
+Force the local Ollama backend with the phi3 model:
+.B
+  zz --backend ollama --model phi3 "print the working directory"
+.TP
+Use the llm CLI driver for local testing:
+.B
+  zz --backend llm "show me the first 5 lines of README.md"
+.SH SEE ALSO
+.BR curl (1),
+.BR jq (1),
+.BR ollama (1),
+.BR llm (1)
+.SH AUTHOR
+Written by Joseph Ian Walker.
