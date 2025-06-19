@@ -74,3 +74,7 @@ man zz
 ## Author
 
 Written by Joseph Ian Walker.
+
+## License
+
+This project is released under the MIT License. See [LICENSE](LICENSE) for details.
